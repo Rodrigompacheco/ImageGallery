@@ -6,6 +6,7 @@ target 'ImageGallery' do
   use_frameworks!
 
   # Pods for ImageGallery
+ 	pod 'Kingfisher', '~> 4.0'
 
   target 'ImageGalleryTests' do
     inherit! :search_paths
@@ -17,3 +18,5 @@ target 'ImageGallery' do
   end
 
 end
+
+
