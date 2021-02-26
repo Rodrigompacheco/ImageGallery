@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+struct PageSizesImageResult: Codable {
+    let sizes: ImageSizeResult
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        sizes = try values.decode(ImageSizeResult.self, forKey: .sizes)
+    }
+    
+    init(sizes: ImageSizeResult) {
+        self.sizes = sizes
+    }
+}
