@@ -15,7 +15,8 @@ enum APIEndpoint {
 extension APIEndpoint {
     static let baseUrl = "https://api.flickr.com"
     static let apiKey = "f9cc014fa76b098f9e82f1c288379ea1"
-
+    static let limitPerPage = 20
+    
     var path: String {
         switch self {
         case .images:
@@ -33,6 +34,7 @@ extension APIEndpoint {
                 URLQueryItem(name: "api_key", value: APIEndpoint.apiKey),
                 URLQueryItem(name: "tags", value: "kitten"),
                 URLQueryItem(name: "page", value: offset.description),
+                URLQueryItem(name: "per_page", value: String(APIEndpoint.limitPerPage)),
                 URLQueryItem(name: "nojsoncallback", value: "1")
             ])
         case .imageData(let id):
