@@ -22,7 +22,7 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let viewController = ViewController()
+        let viewController = ImagesListViewController()
         viewController.title = "Repositórios"
         viewController.view.backgroundColor = AppColorPalette.mainBackground
         navigationController.pushViewController(viewController, animated: false)

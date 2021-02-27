@@ -10,6 +10,7 @@ import Foundation
 struct Image: Codable {
     let id: String
     let title: String
+    var sizes: [ImageSize] = []
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -20,5 +21,15 @@ struct Image: Codable {
     init(id: String, title: String) {
         self.id = id
         self.title = title
+    }
+    
+    func getUrl(for size: Size) -> String {
+        for imageSize in sizes {
+            if imageSize.label == size.rawValue {
+                return imageSize.url
+            }
+        }
+        
+        return ""
     }
 }
