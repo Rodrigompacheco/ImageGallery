@@ -7,6 +7,7 @@ target 'ImageGallery' do
 
   # Pods for ImageGallery
  	pod 'Kingfisher', '~> 4.0'
+	pod 'SnapKit', '~> 5.0.0'
 
   target 'ImageGalleryTests' do
     inherit! :search_paths
