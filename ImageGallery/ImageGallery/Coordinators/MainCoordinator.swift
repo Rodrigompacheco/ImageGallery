@@ -22,8 +22,9 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let viewController = ImagesListViewController()
-        viewController.title = "Repositórios"
+        let service = ImageListService()
+        let viewController = ImagesListViewController(presenter: ImageListPresenter(service: service))
+        viewController.title = "Images"
         viewController.view.backgroundColor = AppColorPalette.mainBackground
         navigationController.pushViewController(viewController, animated: false)
     }

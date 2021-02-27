@@ -8,7 +8,6 @@
 import Foundation
 
 class ImageCollectionCellPresenter {
-    
     private weak var view: ImageCollectionCellView?
     private let image: Image
     

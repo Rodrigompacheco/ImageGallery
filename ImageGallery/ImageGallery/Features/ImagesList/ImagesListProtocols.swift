@@ -14,18 +14,18 @@ protocol ImageCollectionCellView: class {
 
 protocol ImagesListView: class {
     func updateScrollTopBack(_ status: Bool)
-//    func reloadData(_ state: DataState)
+    func reloadData()//_ state: DataState)
     func showAlert(_ message: String)
 }
 
-//protocol RepositoriesInput: class {
-//    var output: RepositoriesOutput? { get set }
-//    func fetchRepositories()
-//    func loadingStatus() -> Bool
-//    func hasMoreToDownloadStatus() -> Bool
-//}
-//
-//protocol RepositoriesOutput: class {
-//    func requestSucceded(repositories: [Repository], state: DataState)
-//    func requestFailed(error: APIError)
-//}
+protocol ImagesInput: class {
+    var output: ImagesOutput? { get set }
+    func fetchImages()
+    func loadingStatus() -> Bool
+    func hasMoreToDownloadStatus() -> Bool
+}
+
+protocol ImagesOutput: class {
+    func requestSucceded(images: [Image])//, state: DataState)
+    func requestFailed(error: APIError)
+}

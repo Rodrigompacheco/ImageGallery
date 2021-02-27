@@ -11,13 +11,16 @@ import SnapKit
 class ImagesListViewController: UIViewController {
     
     private var imagesListCollectionView: UICollectionView!
+    private let presenter: ImageListPresenter
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    init(presenter: ImageListPresenter) {
+        self.presenter = presenter
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         imagesListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        super.init(nibName: nil, bundle: nil)
     }
         
     required init?(coder: NSCoder) { return nil }
@@ -44,21 +47,21 @@ class ImagesListViewController: UIViewController {
 
 extension ImagesListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return presenter.getTotalImages()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let defaultCell = UICollectionViewCell()
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell {
-            var image = Image(id: "", title: "")
-            image.sizes = [ImageSize(label: "Medium", width: 0, height: 0, source: "", url: "www.google.com")]
-
+            guard let image = presenter.getImage(at: indexPath.row) else { return defaultCell }
+            
             let imageCollectionCellPresenter = ImageCollectionCellPresenter(image: image)
             cell.attachPresenter(imageCollectionCellPresenter)
             
             return cell
         }
         
-        return UICollectionViewCell()
+        return defaultCell
     }
 }
 
