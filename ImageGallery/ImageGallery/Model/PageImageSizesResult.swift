@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PageSizesImageResult: Codable {
+struct PageImageSizesResult: Codable {
     let sizes: ImageSizeResult
     
     init(from decoder: Decoder) throws {

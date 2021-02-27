@@ -8,7 +8,7 @@
 import Foundation
 
 struct ImagesResult: Codable {
-    let totalImages: Int
+    let totalImages: String
     let images: [Image]
     
     enum CodingKeys: String, CodingKey {
@@ -18,11 +18,11 @@ struct ImagesResult: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        totalImages = try values.decode(Int.self, forKey: .totalImages)
+        totalImages = try values.decode(String.self, forKey: .totalImages)
         images = try values.decode([Image].self, forKey: .images)
     }
     
-    init(totalImages: Int, images: [Image]) {
+    init(totalImages: String, images: [Image]) {
         self.totalImages = totalImages
         self.images = images
     }

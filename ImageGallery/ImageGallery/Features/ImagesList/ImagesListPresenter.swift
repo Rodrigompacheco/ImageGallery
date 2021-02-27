@@ -15,7 +15,8 @@ class ImageListPresenter {
     
     init(service: ImagesInput) {
         self.service = service
-        self.service.output = self
+        self.service.imagesOutput = self
+        self.service.imageSizesOutput = self
     }
     
     func attachView(view: ImagesListView) {
@@ -49,7 +50,10 @@ class ImageListPresenter {
 extension ImageListPresenter: ImagesOutput {
     func requestSucceded(images: [Image]) {
         self.images = images
-        view?.reloadData()
+        
+        images.forEach({
+            service.fetchImageSizes(id: $0.id)
+        })
     }
     
     func requestFailed(error: APIError) {
@@ -60,5 +64,14 @@ extension ImageListPresenter: ImagesOutput {
             errorMessage = "Number of requests exceeded. Try again in 60 minutes."
         }
         view?.showAlert(errorMessage)
+    }
+}
+
+extension ImageListPresenter: ImageSizesOutput {
+    func requestSucceded(imageSizes: [ImageSize], of id: String) {
+        guard let imageIndex = images.firstIndex(where: { $0.id == id }) else { return }
+        
+        images[imageIndex].sizes = imageSizes
+        view?.reloadData()
     }
 }
