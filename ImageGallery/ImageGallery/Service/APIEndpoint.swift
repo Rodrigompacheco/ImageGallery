@@ -20,9 +20,9 @@ extension APIEndpoint {
     var path: String {
         switch self {
         case .images:
-            return "/services/rest/?method=flickr.photos.search"
+            return "/services/rest/"
         case .imageData:
-            return "/services/rest/?method=flickr.photos.getSizes"
+            return "/services/rest/"
         }
     }
     
@@ -31,14 +31,17 @@ extension APIEndpoint {
         switch self {
         case .images(let offset):
             queryItems.append(contentsOf: [
+                URLQueryItem(name: "method", value: "flickr.photos.search"),
                 URLQueryItem(name: "api_key", value: APIEndpoint.apiKey),
                 URLQueryItem(name: "tags", value: "kitten"),
                 URLQueryItem(name: "page", value: offset.description),
                 URLQueryItem(name: "per_page", value: String(APIEndpoint.limitPerPage)),
+                URLQueryItem(name: "format", value: "json"),
                 URLQueryItem(name: "nojsoncallback", value: "1")
             ])
         case .imageData(let id):
             queryItems.append(contentsOf: [
+                URLQueryItem(name: "method", value: "flickr.photos.getSizes"),
                 URLQueryItem(name: "api_key", value: APIEndpoint.apiKey),
                 URLQueryItem(name: "photo_id", value: id),
                 URLQueryItem(name: "format", value: "json"),

@@ -29,6 +29,7 @@ class ImagesListViewController: UIViewController {
         super.viewDidLoad()
         
         setupImagesListCollectionView()
+        presenter.attachView(view: self)
     }
     
     func setupImagesListCollectionView() {
@@ -76,6 +77,27 @@ extension ImagesListViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.sizeForCards
+    }
+}
+
+extension ImagesListViewController: ImagesListView {
+    func updateScrollTopBack(_ status: Bool) {
+        //TODO: Feature to scroll to the begining of the list (top)
+    }
+    
+    func reloadData() {
+        DispatchQueue.main.async {
+            self.imagesListCollectionView.reloadData()
+        }
+    }
+    
+    func showAlert(_ message: String) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Warning", message: message, preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 

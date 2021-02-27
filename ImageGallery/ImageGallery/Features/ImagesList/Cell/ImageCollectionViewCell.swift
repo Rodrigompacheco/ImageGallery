@@ -46,6 +46,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
         
         pictureImageView.layer.cornerRadius = 10
         pictureImageView.clipsToBounds = true
+        pictureImageView.contentMode = .scaleAspectFill
     }
 }
 
@@ -56,6 +57,6 @@ extension ImageCollectionViewCell: ImageCollectionCellView {
     }
     
     func setImage(_ photo: String) {
-        pictureImageView.image = UIImage(named: "cycle")
+        pictureImageView.load(thumbnailImage: photo)
     }
 }

@@ -26,7 +26,7 @@ struct Image: Codable {
     func getUrl(for size: Size) -> String {
         for imageSize in sizes {
             if imageSize.label == size.rawValue {
-                return imageSize.url
+                return imageSize.source
             }
         }
         

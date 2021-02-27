@@ -12,7 +12,7 @@ extension UICollectionView {
         let padding: CGFloat =  30
         let collectionViewSize = self.frame.size.width - padding
         let percentageOfWidth: CGFloat = 0.50
-        let percentageOfHeight: CGFloat = 0.35
+        let percentageOfHeight: CGFloat = 0.25
         
         return CGSize(width: collectionViewSize * percentageOfWidth,
                       height: self.frame.height * percentageOfHeight)

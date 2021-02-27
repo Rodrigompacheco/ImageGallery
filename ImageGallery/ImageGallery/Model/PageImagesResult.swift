@@ -11,7 +11,7 @@ struct PageImagesResult: Codable {
     let images: ImagesResult
     
     enum CodingKeys: String, CodingKey {
-        case images = "photo"
+        case images = "photos"
     }
     
     init(from decoder: Decoder) throws {
@@ -23,3 +23,30 @@ struct PageImagesResult: Codable {
         self.images = images
     }
 }
+
+/*
+ {
+ "photos":
+    {
+    "page":1,
+    "pages":937922,
+    "perpage":1,
+    "total":"937922",
+    "photo":[{
+            "id":"50986748756",
+            "owner":"91375507@N07",
+            "secret":"82f593ff8c",
+            "server":"65535",
+            "farm":66,
+            "title":"still-life 27-02-2021 003",
+            "ispublic":1,
+            "isfriend":0,
+            "isfamily":0
+            }]
+    },
+ "stat":"ok"
+ }
+ 
+ 
+ 
+ */

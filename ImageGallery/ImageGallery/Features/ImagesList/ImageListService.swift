@@ -7,11 +7,47 @@
 
 import Foundation
 
-class ImageListService: ImagesInput {
-    var output: ImagesOutput?
+class ImageListService {
+    var imagesOutput: ImagesOutput?
+    var imageSizesOutput: ImageSizesOutput?
+    private let api: Provider
     
+    init(api: Provider = APIProvider()) {
+        self.api = api
+    }
+}
+
+extension ImageListService: ImagesInput {
     func fetchImages() {
+        let endpoint = APIEndpoint.images(offset: 0)
         
+        api.request(for: endpoint) { [weak self] (result: Result<PageImagesResult, Error>) in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let pageImages):
+                let images = pageImages.images.images
+                self.imagesOutput?.requestSucceded(images: images)
+            case .failure(_):
+                self.imagesOutput?.requestFailed(error: APIError.makeRequest)
+            }
+        }
+    }
+    
+    func fetchImageSizes(id: String) {
+        let endpoint = APIEndpoint.imageData(id: id)
+        
+        api.request(for: endpoint) { [weak self] (result: Result<PageImageSizesResult, Error>) in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let pageImageSizes):
+                let imageSizes = pageImageSizes.sizes.sizes
+                self.imageSizesOutput?.requestSucceded(imageSizes: imageSizes, of: id)
+            case .failure(_):
+                self.imageSizesOutput?.requestFailed(error: APIError.makeRequest)
+            }
+        }
     }
     
     func loadingStatus() -> Bool {
