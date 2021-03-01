@@ -22,6 +22,6 @@ class ImageCollectionCellPresenter {
 
     func setupView() {
         view?.setupView()
-        view?.setImage(image.getUrl(for: .medium))
+        view?.setImage(image.getUrl())
     }
 }

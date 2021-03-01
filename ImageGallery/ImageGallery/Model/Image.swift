@@ -23,13 +23,26 @@ struct Image: Codable {
         self.title = title
     }
     
-    func getUrl(for size: Size) -> String {
+    func hasUrl() -> Bool {        
+        for imageSize in sizes {
+            if !imageSize.source.isEmpty {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func getUrl() -> String {
+        return getUrl(for: .medium) ?? getUrl(for: .large) ?? getUrl(for: .small) ?? getUrl(for: .thumbnail) ?? getUrl(for: .square) ?? ""
+    }
+    
+    private func getUrl(for size: Size) -> String? {
         for imageSize in sizes {
             if imageSize.label == size.rawValue {
                 return imageSize.source
             }
         }
         
-        return ""
+        return nil
     }
 }

@@ -15,7 +15,7 @@ enum APIEndpoint {
 extension APIEndpoint {
     static let baseUrl = "https://api.flickr.com"
     static let apiKey = "f9cc014fa76b098f9e82f1c288379ea1"
-    static let limitPerPage = 20
+    static let limitPerPage = 15
     
     var path: String {
         switch self {
@@ -62,3 +62,31 @@ extension APIEndpoint {
         return url
     }
 }
+
+/*
+ 
+ 
+ {
+    "photos":
+    {
+        "page":1,
+        "pages":952049,
+        "perpage":1,
+        "total":"952049",
+        "photo":[{
+                "id":"50988754171",
+                "owner":"97772383@N00",
+                "secret":"d0f1be67da",
+                "server":"65535",
+                "farm":66,
+                "title":"DSC00739",
+                "ispublic":1,
+                "isfriend":0,
+                "isfamily":0
+          }]
+    },
+    "stat":"ok"
+ }
+ 
+ 
+ */
