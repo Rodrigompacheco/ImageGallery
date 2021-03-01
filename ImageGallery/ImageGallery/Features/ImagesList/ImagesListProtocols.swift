@@ -33,6 +33,6 @@ protocol ImagesOutput: class {
 }
 
 protocol ImageSizesOutput: class {
-    func requestSucceded(imageSizes: [ImageSize], of id: String, state: DataState)//, state: DataState)
+    func requestSucceded(imageSizes: [ImageSize], of id: String)
     func requestFailed(error: APIError)
 }

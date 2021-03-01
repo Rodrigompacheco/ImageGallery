@@ -30,25 +30,8 @@ extension ImageListService: ImagesInput {
             
             switch result {
             case .success(let pageImages):
-//                var dataPackage: DataPackage<ImagesResult>?
-//                do {
-//                    dataPackage = try DataPackage<ImagesResult>(from: pageImages.images as! Decoder)
-//                } catch {
-//                    self.imagesOutput?.requestFailed(error: APIError.makeRequest)
-//                }
-                
-//                var state: DataState?
-//                if let dataPackage = dataPackage {
-//                    state = self.paginator.paginate(dataPackage: dataPackage)
-//                }
-                do {
-                    print("URL: \(try APIEndpoint.images(offset: self.paginator.offset).makeUrl()))")
-                } catch {
-                    print("URL: deu erro")
-                }
                 let state = self.paginator.paginate(dataPackage: pageImages.images)
                 let images = pageImages.images.images
-                print("IMAGENS: ", pageImages.images.images)
                 self.imagesOutput?.requestSucceded(images: images, state: state)
             case .failure(_):
                 self.imagesOutput?.requestFailed(error: APIError.makeRequest)
@@ -65,7 +48,7 @@ extension ImageListService: ImagesInput {
             switch result {
             case .success(let pageImageSizes):
                 let imageSizes = pageImageSizes.sizes.sizes
-                self.imageSizesOutput?.requestSucceded(imageSizes: imageSizes, of: id, state: .initial)
+                self.imageSizesOutput?.requestSucceded(imageSizes: imageSizes, of: id)
             case .failure(_):
                 self.imageSizesOutput?.requestFailed(error: APIError.makeRequest)
             }

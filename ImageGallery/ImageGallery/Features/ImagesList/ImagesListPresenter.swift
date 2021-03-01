@@ -12,8 +12,6 @@ class ImageListPresenter {
     private var imageList: [Image] = []
     private var newImageListToAdd: [Image] = []
     private var fechImagesState: DataState = .initial
-    private var imageSizesRequestsCount = 0
-    private var isLoadingSizes = false
 
     private weak var view: ImagesListView?
     
@@ -29,7 +27,6 @@ class ImageListPresenter {
     }
     
     func fetchData() {
-        isLoadingSizes = true
         service.fetchImages()
     }
     
@@ -44,7 +41,7 @@ class ImageListPresenter {
     }
     
     func isLoading() -> Bool {
-        if service.loadingStatus() {//|| isLoadingSizes {
+        if service.loadingStatus() {
             return true
         }
         return false
@@ -54,34 +51,24 @@ class ImageListPresenter {
         return service.hasMoreToDownloadStatus()
     }
     
-    func addNewImages(images: [Image]) {
-        for image in images {
-            if !imageList.contains(where: { $0.id == image.id}) {
-                imageList.append(image)
-            }
-        }
+    func getOnlyNewImages(images: [Image]) -> [Image] {
+        let ids = Set(imageList.map({ $0.id }))
+        let result = images.filter { !ids.contains($0.id) }
+        return result
     }
 }
 
 extension ImageListPresenter: ImagesOutput {
     func requestSucceded(images: [Image], state: DataState) {
-//        addNewImages(images: images)
-
-        let ids = imageList.map({ $0.id })
-        let set = Set(ids)
-        let result = images.filter { !set.contains($0.id) }
-        imageList.append(contentsOf: result)
-        newImageListToAdd = result
-        
         fechImagesState = state
-        print("\nQuantidade de ids no array agora: \(imageList.count)")
         
-//        service.fetchImageSizes(id: newImageListToAdd.first!.id)
-
+        let newImages = getOnlyNewImages(images: images)
+        imageList.append(contentsOf: newImages)
+        newImageListToAdd = newImages
+        
         images.forEach({ image in
             service.fetchImageSizes(id: image.id)
         })
-
     }
     
     func requestFailed(error: APIError) {
@@ -96,24 +83,10 @@ extension ImageListPresenter: ImagesOutput {
 }
 
 extension ImageListPresenter: ImageSizesOutput {
-    func requestSucceded(imageSizes: [ImageSize], of id: String, state: DataState) {
+    func requestSucceded(imageSizes: [ImageSize], of id: String) {
         guard let imageIndex = imageList.lastIndex(where: { $0.id == id }) else { return }
-
-        imageSizesRequestsCount += 1
-//        if !imageSizes.isEmpty && imageList[imageIndex].sizes.isEmpty {
-            imageList[imageIndex].sizes = imageSizes
-            print("INDEX: \(imageIndex)    -    ID: \(id)    -   SIZES: \(imageSizes.count)   -   TEM URL: \(imageList[imageIndex].hasUrl())")
-//        }
-
-//        if imageSizesRequestsCount == newImageListToAdd.count {
-//            isLoadingSizes = false
-            view?.reloadData(fechImagesState)
-//            imageSizesRequestsCount = 0
-//        } else {
-//            print("ID do PRÓX: ", newImageListToAdd[imageSizesRequestsCount].id)
-//            service.fetchImageSizes(id: newImageListToAdd[imageSizesRequestsCount].id)
-//        }
         
-        
+        imageList[imageIndex].sizes = imageSizes
+        view?.reloadData(fechImagesState)
     }
 }
