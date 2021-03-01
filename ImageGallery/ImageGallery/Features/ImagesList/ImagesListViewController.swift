@@ -32,7 +32,7 @@ class ImagesListViewController: UIViewController {
         presenter.attachView(view: self)
     }
     
-    func setupImagesListCollectionView() {
+    private func setupImagesListCollectionView() {
         view.addSubview(imagesListCollectionView)
 
         imagesListCollectionView.snp.makeConstraints {
@@ -43,6 +43,25 @@ class ImagesListViewController: UIViewController {
         imagesListCollectionView.delegate = self
         imagesListCollectionView.backgroundColor = .clear
         imagesListCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
+    }
+    
+    private func updateUI(dataState: DataState) {
+        switch dataState {
+        case .initial:
+            DispatchQueue.main.async {
+                self.imagesListCollectionView.reloadData()
+            }
+        case .inserted(let indexPaths):
+            DispatchQueue.main.async {
+                self.imagesListCollectionView.performBatchUpdates({
+                    self.imagesListCollectionView.insertItems(at: indexPaths)
+                })
+            }
+        case .loading:
+            break
+        default:
+            break
+        }
     }
 }
 
@@ -69,6 +88,16 @@ extension ImagesListViewController: UICollectionViewDataSource {
 extension ImagesListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //TODO: Open the image specs
+        print(presenter.getImage(at: indexPath.row)!.id)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView.reachedBottom && !presenter.isLoading() && presenter.hasMoreToDownload()  else { return }
+        
+//        let footer = tableView.cellForRow(at: IndexPath(item: 0, section: 1)) as? ActivityIndicatorTableViewCell
+//        footer?.startAnimating()
+        
+        presenter.fetchData()
     }
 }
 
@@ -85,9 +114,9 @@ extension ImagesListViewController: ImagesListView {
         //TODO: Feature to scroll to the begining of the list (top)
     }
     
-    func reloadData() {
+    func reloadData(_ state: DataState) {
         DispatchQueue.main.async {
-            self.imagesListCollectionView.reloadData()
+            self.updateUI(dataState: state)
         }
     }
     

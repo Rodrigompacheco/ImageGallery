@@ -164,8 +164,8 @@ extension Kingfisher where Base: Image {
         }
     }
     
-    static func animated(with images: [Image], forDuration duration: TimeInterval) -> Image? {
-        return .animatedImage(with: images, duration: duration)
+    static func animated(with imageList: [Image], forDuration duration: TimeInterval) -> Image? {
+        return .animatedImage(with: imageList, duration: duration)
     }
     #endif
 }
@@ -290,8 +290,8 @@ extension Kingfisher where Base: Image {
             
             let image: Image?
             if preloadAll || onlyFirstFrame {
-                guard let (images, gifDuration) = decode(from: imageSource, for: options) else { return nil }
-                image = onlyFirstFrame ? images.first : Kingfisher<Image>.animated(with: images, forDuration: duration <= 0.0 ? gifDuration : duration)
+                guard let (imageList, gifDuration) = decode(from: imageSource, for: options) else { return nil }
+                image = onlyFirstFrame ? imageList.first : Kingfisher<Image>.animated(with: imageList, forDuration: duration <= 0.0 ? gifDuration : duration)
             } else {
                 image = Image(data: data, scale: scale)
                 image?.kf.imageSource = ImageSource(ref: imageSource)

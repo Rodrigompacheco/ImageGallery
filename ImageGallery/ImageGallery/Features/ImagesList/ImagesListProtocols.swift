@@ -14,7 +14,7 @@ protocol ImageCollectionCellView: class {
 
 protocol ImagesListView: class {
     func updateScrollTopBack(_ status: Bool)
-    func reloadData()//_ state: DataState)
+    func reloadData(_ state: DataState)
     func showAlert(_ message: String)
 }
 
@@ -28,11 +28,11 @@ protocol ImagesInput: class {
 }
 
 protocol ImagesOutput: class {
-    func requestSucceded(images: [Image])//, state: DataState)
+    func requestSucceded(images: [Image], state: DataState)
     func requestFailed(error: APIError)
 }
 
 protocol ImageSizesOutput: class {
-    func requestSucceded(imageSizes: [ImageSize], of id: String)//, state: DataState)
+    func requestSucceded(imageSizes: [ImageSize], of id: String)
     func requestFailed(error: APIError)
 }

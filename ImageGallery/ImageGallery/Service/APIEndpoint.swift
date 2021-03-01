@@ -9,19 +9,19 @@ import Foundation
 
 enum APIEndpoint {
     case images(offset: Int)
-    case imageData(id: String)
+    case imageSizes(id: String)
 }
 
 extension APIEndpoint {
     static let baseUrl = "https://api.flickr.com"
     static let apiKey = "f9cc014fa76b098f9e82f1c288379ea1"
-    static let limitPerPage = 20
+    static let limitPerPage = 15
     
     var path: String {
         switch self {
         case .images:
             return "/services/rest/"
-        case .imageData:
+        case .imageSizes:
             return "/services/rest/"
         }
     }
@@ -39,7 +39,7 @@ extension APIEndpoint {
                 URLQueryItem(name: "format", value: "json"),
                 URLQueryItem(name: "nojsoncallback", value: "1")
             ])
-        case .imageData(let id):
+        case .imageSizes(let id):
             queryItems.append(contentsOf: [
                 URLQueryItem(name: "method", value: "flickr.photos.getSizes"),
                 URLQueryItem(name: "api_key", value: APIEndpoint.apiKey),

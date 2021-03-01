@@ -9,7 +9,9 @@ import Foundation
 
 class ImageListPresenter {
     private let service: ImagesInput
-    private var images: [Image] = []
+    private var imageList: [Image] = []
+    private var newImageListToAdd: [Image] = []
+    private var fechImagesState: DataState = .initial
 
     private weak var view: ImagesListView?
     
@@ -29,30 +31,43 @@ class ImageListPresenter {
     }
     
     func getTotalImages() -> Int {
-        return images.count
+        return imageList.count
     }
     
     func getImage(at index: Int) -> Image? {
-        guard index < images.count else { return nil }
+        guard index < imageList.count else { return nil }
         
-        return images[index]
+        return imageList[index]
     }
     
     func isLoading() -> Bool {
-        return service.loadingStatus()
+        if service.loadingStatus() {
+            return true
+        }
+        return false
     }
     
     func hasMoreToDownload() -> Bool {
         return service.hasMoreToDownloadStatus()
     }
+    
+    func getOnlyNewImages(images: [Image]) -> [Image] {
+        let ids = Set(imageList.map({ $0.id }))
+        let result = images.filter { !ids.contains($0.id) }
+        return result
+    }
 }
 
 extension ImageListPresenter: ImagesOutput {
-    func requestSucceded(images: [Image]) {
-        self.images = images
+    func requestSucceded(images: [Image], state: DataState) {
+        fechImagesState = state
         
-        images.forEach({
-            service.fetchImageSizes(id: $0.id)
+        let newImages = getOnlyNewImages(images: images)
+        imageList.append(contentsOf: newImages)
+        newImageListToAdd = newImages
+        
+        images.forEach({ image in
+            service.fetchImageSizes(id: image.id)
         })
     }
     
@@ -69,9 +84,9 @@ extension ImageListPresenter: ImagesOutput {
 
 extension ImageListPresenter: ImageSizesOutput {
     func requestSucceded(imageSizes: [ImageSize], of id: String) {
-        guard let imageIndex = images.firstIndex(where: { $0.id == id }) else { return }
+        guard let imageIndex = imageList.lastIndex(where: { $0.id == id }) else { return }
         
-        images[imageIndex].sizes = imageSizes
-        view?.reloadData()
+        imageList[imageIndex].sizes = imageSizes
+        view?.reloadData(fechImagesState)
     }
 }

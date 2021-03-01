@@ -57,6 +57,10 @@ extension ImageCollectionViewCell: ImageCollectionCellView {
     }
     
     func setImage(_ photo: String) {
-        pictureImageView.load(thumbnailImage: photo)
+        if photo.isEmpty {
+            pictureImageView.image = UIImage(named: "noImagePlaceholder")
+        } else {
+            pictureImageView.load(thumbnailImage: photo)
+        }
     }
 }
