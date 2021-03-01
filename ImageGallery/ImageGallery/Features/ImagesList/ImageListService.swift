@@ -57,7 +57,7 @@ extension ImageListService: ImagesInput {
     }
     
     func fetchImageSizes(id: String) {
-        let endpoint = APIEndpoint.imageData(id: id)
+        let endpoint = APIEndpoint.imageSizes(id: id)
         
         api.request(for: endpoint) { [weak self] (result: Result<PageImageSizesResult, Error>) in
             guard let self = self else { return }
