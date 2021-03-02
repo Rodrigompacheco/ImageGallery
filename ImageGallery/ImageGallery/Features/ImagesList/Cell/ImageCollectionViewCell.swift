@@ -32,9 +32,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
         
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 10
-        cardView.layer.shadowOffset = CGSize(width: 0, height: 3)
-        cardView.layer.shadowRadius = 10
-        cardView.layer.shadowOpacity = 0.7
+        cardView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        cardView.layer.shadowRadius = 5
+        cardView.layer.shadowOpacity = 0.5
     }
     
     private func setupPictureImageView() {

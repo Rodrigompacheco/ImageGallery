@@ -12,12 +12,16 @@ class ImagesListViewController: UIViewController {
     
     private var imagesListCollectionView: UICollectionView!
     private let presenter: ImageListPresenter
+    private var footer: UICollectionReusableView?
+    private let footerIdentifier = "footer"
+    private let footerElementKind = UICollectionView.elementKindSectionFooter
     
     init(presenter: ImageListPresenter) {
         self.presenter = presenter
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.footerReferenceSize = CGSize(width: 200, height: 100)
         imagesListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         super.init(nibName: nil, bundle: nil)
@@ -43,6 +47,7 @@ class ImagesListViewController: UIViewController {
         imagesListCollectionView.delegate = self
         imagesListCollectionView.backgroundColor = .clear
         imagesListCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
+        imagesListCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: footerElementKind, withReuseIdentifier: footerIdentifier)
     }
     
     private func updateUI(dataState: DataState) {
@@ -83,6 +88,20 @@ extension ImagesListViewController: UICollectionViewDataSource {
         
         return defaultCell
     }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case footerElementKind:
+            let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: footerElementKind,
+                                                            withReuseIdentifier: footerIdentifier,
+                                                            for: indexPath)
+            return supplementaryView
+        default:
+            return UICollectionReusableView()
+        }
+    }
 }
 
 extension ImagesListViewController: UICollectionViewDelegate {
@@ -94,8 +113,9 @@ extension ImagesListViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard scrollView.reachedBottom && !presenter.isLoading() && presenter.hasMoreToDownload()  else { return }
         
-//        let footer = tableView.cellForRow(at: IndexPath(item: 0, section: 1)) as? ActivityIndicatorTableViewCell
-//        footer?.startAnimating()
+        let indexPath = IndexPath(item: 0, section: 0)
+        footer = imagesListCollectionView.supplementaryView(forElementKind: footerElementKind, at: indexPath)
+        footer?.lock()
         
         presenter.fetchData()
     }
@@ -116,6 +136,7 @@ extension ImagesListViewController: ImagesListView {
     
     func reloadData(_ state: DataState) {
         DispatchQueue.main.async {
+            self.footer?.unlock()
             self.updateUI(dataState: state)
         }
     }
