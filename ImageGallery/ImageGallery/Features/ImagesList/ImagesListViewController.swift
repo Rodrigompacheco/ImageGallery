@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+protocol ImagesListPresenterCoordinatorDelegate: class {
+    func didSelectImage(image: Image)
+}
+
 class ImagesListViewController: UIViewController {
     
     private var imagesListCollectionView: UICollectionView!
@@ -106,8 +110,7 @@ extension ImagesListViewController: UICollectionViewDataSource {
 
 extension ImagesListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //TODO: Open the image specs
-        print(presenter.getImage(at: indexPath.row)!.id)
+        presenter.didSelectImage(at: indexPath.row)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

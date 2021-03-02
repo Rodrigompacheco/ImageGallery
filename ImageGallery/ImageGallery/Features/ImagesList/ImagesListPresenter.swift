@@ -14,6 +14,7 @@ class ImageListPresenter {
     private var fechImagesState: DataState = .initial
 
     private weak var view: ImagesListView?
+    weak var presenterCoordinatorDelegate: ImagesListPresenterCoordinatorDelegate?
     
     init(service: ImagesInput) {
         self.service = service
@@ -49,6 +50,15 @@ class ImageListPresenter {
     
     func hasMoreToDownload() -> Bool {
         return service.hasMoreToDownloadStatus()
+    }
+    
+    func didSelectImage(at index: Int) {
+        guard let image = getImage(at: index) else {
+            view?.showAlert("Failed to load the image")
+            return
+        }
+        
+        presenterCoordinatorDelegate?.didSelectImage(image: image)
     }
     
     func getOnlyNewImages(images: [Image]) -> [Image] {
