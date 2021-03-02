@@ -86,7 +86,7 @@ extension ImageListPresenter: ImagesOutput {
         
         switch error {
         default:
-            errorMessage = "Number of requests exceeded. Try again in 60 minutes."
+            errorMessage = "An error occured. Try again later."
         }
         view?.showAlert(errorMessage)
     }

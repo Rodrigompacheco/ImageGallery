@@ -35,7 +35,7 @@
 		41B4E1DA25E584B20026B9C9 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B4E1D925E584B20026B9C9 /* ImagesListViewController.swift */; };
 		41B4E1DF25E584B60026B9C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41B4E1DE25E584B60026B9C9 /* Assets.xcassets */; };
 		41B4E1E225E584B60026B9C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41B4E1E025E584B60026B9C9 /* LaunchScreen.storyboard */; };
-		41B4E1ED25E584B60026B9C9 /* ImageGalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B4E1EC25E584B60026B9C9 /* ImageGalleryTests.swift */; };
+		41B4E1ED25E584B60026B9C9 /* ImagesListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B4E1EC25E584B60026B9C9 /* ImagesListPresenterTests.swift */; };
 		41B4E1F825E584B60026B9C9 /* ImageGalleryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B4E1F725E584B60026B9C9 /* ImageGalleryUITests.swift */; };
 		41EA7CD625E6D529004C77D9 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EA7CD525E6D529004C77D9 /* Coordinator.swift */; };
 		41EA7CDB25E6D575004C77D9 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41EA7CDA25E6D575004C77D9 /* MainCoordinator.swift */; };
@@ -97,7 +97,7 @@
 		41B4E1E125E584B60026B9C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		41B4E1E325E584B60026B9C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41B4E1E825E584B60026B9C9 /* ImageGalleryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageGalleryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		41B4E1EC25E584B60026B9C9 /* ImageGalleryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryTests.swift; sourceTree = "<group>"; };
+		41B4E1EC25E584B60026B9C9 /* ImagesListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListPresenterTests.swift; sourceTree = "<group>"; };
 		41B4E1EE25E584B60026B9C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		41B4E1F325E584B60026B9C9 /* ImageGalleryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageGalleryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		41B4E1F725E584B60026B9C9 /* ImageGalleryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryUITests.swift; sourceTree = "<group>"; };
@@ -231,7 +231,7 @@
 		41B4E1EB25E584B60026B9C9 /* ImageGalleryTests */ = {
 			isa = PBXGroup;
 			children = (
-				41B4E1EC25E584B60026B9C9 /* ImageGalleryTests.swift */,
+				41B4E1EC25E584B60026B9C9 /* ImagesListPresenterTests.swift */,
 				41B4E1EE25E584B60026B9C9 /* Info.plist */,
 			);
 			path = ImageGalleryTests;
@@ -386,6 +386,7 @@
 				41B4E1E425E584B60026B9C9 /* Sources */,
 				41B4E1E525E584B60026B9C9 /* Frameworks */,
 				41B4E1E625E584B60026B9C9 /* Resources */,
+				38F707F6651BE2A95DB63D7D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -530,6 +531,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		38F707F6651BE2A95DB63D7D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ImageGalleryTests/Pods-ImageGalleryTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ImageGalleryTests/Pods-ImageGalleryTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ImageGalleryTests/Pods-ImageGalleryTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		584FB8A68356BBE977B7B2A7 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -632,7 +650,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41B4E1ED25E584B60026B9C9 /* ImageGalleryTests.swift in Sources */,
+				41B4E1ED25E584B60026B9C9 /* ImagesListPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
