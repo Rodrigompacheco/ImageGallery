@@ -6,10 +6,14 @@ target 'ImageGallery' do
   use_frameworks!
 
   # Pods for ImageGallery
+ 	pod 'Kingfisher', '~> 4.0'
+	pod 'SnapKit', '~> 5.0.0'
 
   target 'ImageGalleryTests' do
     inherit! :search_paths
     # Pods for testing
+	pod 'Quick'
+    	pod 'Nimble'
   end
 
   target 'ImageGalleryUITests' do
@@ -17,3 +21,5 @@ target 'ImageGallery' do
   end
 
 end
+
+
