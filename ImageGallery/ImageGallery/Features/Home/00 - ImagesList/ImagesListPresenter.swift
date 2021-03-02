@@ -14,6 +14,7 @@ class ImageListPresenter {
     private var fechImagesState: DataState = .initial
 
     private weak var view: ImagesListView?
+    weak var presenterCoordinatorDelegate: ImagesListPresenterCoordinatorDelegate?
     
     init(service: ImagesInput) {
         self.service = service
@@ -51,6 +52,15 @@ class ImageListPresenter {
         return service.hasMoreToDownloadStatus()
     }
     
+    func didSelectImage(at index: Int) {
+        guard let image = getImage(at: index) else {
+            view?.showAlert("Failed to load the image")
+            return
+        }
+        
+        presenterCoordinatorDelegate?.didSelectImage(image: image)
+    }
+    
     func getOnlyNewImages(images: [Image]) -> [Image] {
         let ids = Set(imageList.map({ $0.id }))
         let result = images.filter { !ids.contains($0.id) }
@@ -76,7 +86,7 @@ extension ImageListPresenter: ImagesOutput {
         
         switch error {
         default:
-            errorMessage = "Number of requests exceeded. Try again in 60 minutes."
+            errorMessage = "An error occured. Try again later."
         }
         view?.showAlert(errorMessage)
     }

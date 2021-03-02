@@ -22,10 +22,20 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let service = ImageListService()
-        let viewController = ImagesListViewController(presenter: ImageListPresenter(service: service))
+        let presenter = ImageListPresenter(service: ImageListService())
+        presenter.presenterCoordinatorDelegate = self
+        let viewController = ImagesListViewController(presenter: presenter)
         viewController.title = "Images"
         viewController.view.backgroundColor = AppColorPalette.mainBackground
         navigationController.pushViewController(viewController, animated: false)
+    }
+}
+
+extension MainCoordinator: ImagesListPresenterCoordinatorDelegate {
+    func didSelectImage(image: Image) {
+        let presenter = ImageDetailPresenter(image: image)
+        let viewController = ImageDetailViewController(presenter: presenter)
+        viewController.view.backgroundColor = AppColorPalette.mainBackground
+        navigationController.present(viewController, animated: true, completion: nil)
     }
 }
