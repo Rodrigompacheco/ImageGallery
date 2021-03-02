@@ -13,7 +13,6 @@ protocol ImageCollectionCellView: class {
 }
 
 protocol ImagesListView: class {
-    func updateScrollTopBack(_ status: Bool)
     func reloadData(_ state: DataState)
     func showAlert(_ message: String)
 }

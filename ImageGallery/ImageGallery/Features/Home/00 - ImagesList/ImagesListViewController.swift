@@ -133,10 +133,6 @@ extension ImagesListViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension ImagesListViewController: ImagesListView {
-    func updateScrollTopBack(_ status: Bool) {
-        //TODO: Feature to scroll to the begining of the list (top)
-    }
-    
     func reloadData(_ state: DataState) {
         DispatchQueue.main.async {
             self.footer?.unlock()
