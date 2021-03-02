@@ -2,6 +2,7 @@
 This application lists the images searched and returned from the flickr API (https://api.flickr.com/).
 
 ## Screenshots
+![alt text](https://github.com/Rodrigompacheco/ImageGallery/blob/main/Screenshots/2.png "List of Images with Paged Request") ![alt text](https://github.com/Rodrigompacheco/ImageGallery/blob/main/Screenshots/3.png "Image Detail - (Fullscreen))")
 
 
 ## Requirements
