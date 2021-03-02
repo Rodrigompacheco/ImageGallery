@@ -11,7 +11,7 @@ struct PageImagesResult: Codable {
     let images: ImagesResult
     
     enum CodingKeys: String, CodingKey {
-        case images = "photo"
+        case images = "photos"
     }
     
     init(from decoder: Decoder) throws {
